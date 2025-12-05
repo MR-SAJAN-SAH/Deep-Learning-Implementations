@@ -1,230 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="horizon-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobexIP | Global Patent Filing & IP Protection</title>
+    <title>GlobexIP | Horizon Intelligence Platform for Global IP Protection</title>
+    
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Suisse+Intl:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js for 3D Globe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
+    
+    <!-- Modern CSS Reset -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css">
+    
     <style>
+        /* CSS Variables - Advanced Design System */
         :root {
-            --navy: #0a192f;
-            --navy-dark: #071224;
-            --navy-light: #112240;
-            --platinum: #f8f9fa;
-            --platinum-dark: #e9ecef;
-            --gold: #d4af37;
-            --gold-light: #e6c35c;
-            --gold-dark: #b8941f;
-            --accent: #2563eb;
-            --gray-light: #94a3b8;
-            --gray: #64748b;
-            --gray-dark: #334155;
-            --success: #10b981;
-            --border-radius: 12px;
-            --border-radius-lg: 20px;
-            --border-radius-xl: 30px;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
-            --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.15);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            --transition-fast: all 0.2s ease;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            /* Color Palette - Professional Gradient System */
+            --color-primary-50: #E8F0FE;
+            --color-primary-100: #D2E3FC;
+            --color-primary-200: #AECBFA;
+            --color-primary-300: #8AB4F8;
+            --color-primary-400: #669DF6;
+            --color-primary-500: #4285F4;
+            --color-primary-600: #1A73E8;
+            --color-primary-700: #0D5ABF;
+            --color-primary-800: #0B4A9F;
+            --color-primary-900: #083E87;
+            
+            --color-dark-50: #E8EAED;
+            --color-dark-100: #DADCE0;
+            --color-dark-200: #BDC1C6;
+            --color-dark-300: #9AA0A6;
+            --color-dark-400: #80868B;
+            --color-dark-500: #5F6368;
+            --color-dark-600: #3C4043;
+            --color-dark-700: #202124;
+            --color-dark-800: #171717;
+            --color-dark-900: #0F0F0F;
+            
+            --color-success: #00C853;
+            --color-warning: #FF9800;
+            --color-error: #FF5252;
+            --color-info: #448AFF;
+            
+            /* Gradients - Advanced */
+            --gradient-primary: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-800) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--color-dark-800) 0%, var(--color-dark-900) 100%);
+            --gradient-light: linear-gradient(135deg, #FFFFFF 0%, #F5F7FA 100%);
+            --gradient-glow: linear-gradient(135deg, var(--color-primary-400) 0%, var(--color-primary-600) 50%, var(--color-primary-800) 100%);
+            --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            
+            /* Shadows - Material Design 3 */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-glow: 0 0 40px rgba(66, 133, 244, 0.3);
+            
+            /* Border Radius - Modern */
+            --radius-none: 0;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-3xl: 2rem;
+            --radius-full: 9999px;
+            
+            /* Spacing - 8-point Grid */
+            --space-0: 0;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+            --space-32: 8rem;
+            
+            /* Typography Scale */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 3.75rem;
+            --font-size-7xl: 4.5rem;
+            --font-size-8xl: 6rem;
+            
+            /* Font Families */
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-display: 'Clash Display', sans-serif;
+            --font-mono: 'SF Mono', Monaco, monospace;
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Blur Effects */
+            --blur-sm: blur(4px);
+            --blur-md: blur(8px);
+            --blur-lg: blur(16px);
+            --blur-xl: blur(24px);
+            
+            /* Z-Index System */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-fixed: 1030;
+            --z-modal-backdrop: 1040;
+            --z-modal: 1050;
+            --z-popover: 1060;
+            --z-tooltip: 1070;
+            --z-toast: 1080;
         }
 
-        * {
+        /* CSS Reset & Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
+            font-size: 16px;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.7;
-            color: var(--gray-dark);
-            background-color: #ffffff;
-            overflow-x: hidden;
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+            color: var(--color-dark-800);
+            line-height: 1.6;
             font-weight: 400;
-            letter-spacing: 0.01em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Suisse Intl', sans-serif;
-            font-weight: 600;
+        /* Typography System */
+        .display-1 {
+            font-family: var(--font-display);
+            font-size: var(--font-size-7xl);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .display-2 {
+            font-family: var(--font-display);
+            font-size: var(--font-size-6xl);
+            font-weight: 700;
             line-height: 1.2;
             letter-spacing: -0.01em;
         }
 
-        h1 {
-            font-size: 4rem;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
+        .heading-1 {
+            font-size: var(--font-size-5xl);
+            font-weight: 700;
+            line-height: 1.2;
         }
 
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
+        .heading-2 {
+            font-size: var(--font-size-4xl);
+            font-weight: 600;
+            line-height: 1.3;
         }
 
-        h3 {
-            font-size: 2rem;
-            margin-bottom: 1.25rem;
+        .heading-3 {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            line-height: 1.4;
         }
 
-        h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .heading-4 {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            line-height: 1.5;
         }
 
-        p {
-            margin-bottom: 1.5rem;
-            color: var(--gray);
-            font-size: 1.125rem;
-            line-height: 1.8;
+        .body-lg {
+            font-size: var(--font-size-lg);
+            line-height: 1.7;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .body-base {
+            font-size: var(--font-size-base);
+            line-height: 1.6;
         }
 
-        .container-fluid {
-            width: 100%;
-            padding: 0 2rem;
-        }
-
-        section {
-            padding: 7rem 0;
+        .body-sm {
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
         }
 
         .text-gradient {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .bg-gradient {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-        }
-
-        /* Premium Navigation */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Container System */
+        .container {
             width: 100%;
-            z-index: 1000;
-            background: rgba(10, 25, 47, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            transition: var(--transition);
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
         }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 0;
+        .container-fluid {
+            width: 100%;
+            padding: 0 var(--space-6);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.875rem;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--navy);
-            font-weight: 800;
-            font-size: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .logo-text {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: white;
-            letter-spacing: -0.01em;
-        }
-
-        .logo-text span {
-            color: var(--gold);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 500;
-            font-size: 1.125rem;
-            transition: var(--transition-fast);
+        section {
             position: relative;
-            padding: 0.5rem 0;
+            padding: var(--space-24) 0;
         }
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after, nav a.active::after {
-            width: 100%;
-        }
-
-        nav a:hover, nav a.active {
-            color: white;
-        }
-
-        .nav-cta {
-            margin-left: 1.5rem;
-        }
-
+        /* Buttons - Modern Design */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem 2.25rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-lg);
+            font-family: var(--font-sans);
             font-weight: 600;
-            font-size: 1.125rem;
-            transition: var(--transition);
-            cursor: pointer;
+            font-size: var(--font-size-base);
+            text-decoration: none;
             border: none;
-            gap: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
             position: relative;
             overflow: hidden;
-            letter-spacing: 0.02em;
+            isolation: isolate;
         }
 
         .btn::before {
@@ -232,287 +269,353 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 0;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: width 0.4s ease;
-        }
-
-        .btn:hover::before {
             width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity var(--transition-base);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: var(--navy);
-            box-shadow: var(--shadow);
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
             background: transparent;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--color-primary-600);
+            border: 2px solid var(--color-primary-600);
         }
 
         .btn-secondary:hover {
-            border-color: var(--gold);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+            background: var(--color-primary-50);
+            transform: translateY(-2px);
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.75rem;
+        .btn-glass {
+            background: var(--gradient-glass);
+            backdrop-filter: var(--blur-md);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            cursor: pointer;
-            width: 48px;
-            height: 48px;
-            border-radius: var(--border-radius);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation - Modern Glassmorphism */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: var(--z-fixed);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: var(--blur-lg);
+            -webkit-backdrop-filter: var(--blur-lg);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all var(--transition-base);
+        }
+
+        .nav.scrolled {
+            box-shadow: var(--shadow-lg);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition-fast);
-        }
-
-        .mobile-menu-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Mega Menu */
-        .mega-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: rgba(10, 25, 47, 0.95);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 3rem 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-20px);
-            transition: var(--transition);
-            z-index: 999;
-        }
-
-        .mega-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .mega-menu-content {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-        }
-
-        .mega-menu-column h4 {
             color: white;
-            margin-bottom: 1.5rem;
-            font-size: 1.25rem;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-
-        .mega-menu-column h4::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-        }
-
-        .mega-menu-links {
-            list-style: none;
-        }
-
-        .mega-menu-links li {
-            margin-bottom: 1rem;
-        }
-
-        .mega-menu-links a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: var(--transition-fast);
-            padding: 0.5rem 0;
-        }
-
-        .mega-menu-links a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .mega-menu-links i {
-            color: var(--gold);
-            font-size: 1.125rem;
-            width: 24px;
-        }
-
-        /* Ultra-Premium Hero Section */
-        .hero {
-            padding-top: 14rem;
-            background: linear-gradient(135deg, var(--navy) 0%, #0c1e3a 50%, var(--navy-dark) 100%);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: var(--font-size-xl);
             position: relative;
             overflow: hidden;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
         }
 
-        .hero::before {
+        .logo-mark::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
-            z-index: 1;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 3s ease-in-out infinite;
         }
 
-        .world-map {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.15;
-            z-index: 2;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" fill="none" stroke="%23d4af37" stroke-width="0.5" stroke-opacity="0.3"><path d="M100,100 C200,50 300,150 400,100 C500,50 600,150 700,100 C800,50 900,150 1000,100"/><path d="M150,200 C250,150 350,250 450,200 C550,150 650,250 750,200 C850,150 950,250 1050,200"/><circle cx="300" cy="300" r="3" fill="%23d4af37"/><circle cx="600" cy="400" r="3" fill="%23d4af37"/><circle cx="900" cy="250" r="3" fill="%23d4af37"/></svg>');
-            background-size: cover;
-            background-position: center;
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--color-dark-900);
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            max-width: 900px;
-        }
-
-        .hero h1 {
-            color: white;
-            font-size: 4.5rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        .logo-text span {
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.375rem;
-            max-width: 700px;
-            margin-bottom: 3rem;
-        }
-
-        .hero-buttons {
+        .nav-menu {
             display: flex;
-            gap: 1.25rem;
-            margin-bottom: 5rem;
+            align-items: center;
+            gap: var(--space-8);
         }
 
-        .hero-icons {
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--color-dark-600);
+            text-decoration: none;
+            padding: var(--space-2) 0;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width var(--transition-base);
+        }
+
+        .nav-link:hover {
+            color: var(--color-dark-900);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
             display: flex;
-            gap: 3rem;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--space-4);
         }
 
-        .hero-icon {
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: var(--font-size-2xl);
+            color: var(--color-dark-900);
+            cursor: pointer;
+            padding: var(--space-2);
+            border-radius: var(--radius-md);
+            transition: background-color var(--transition-fast);
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: var(--color-dark-50);
+        }
+
+        /* Hero Section - Ultra Modern */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: radial-gradient(circle at 20% 50%, rgba(66, 133, 244, 0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(26, 115, 232, 0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 80%, rgba(66, 133, 244, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-20);
+            align-items: center;
+        }
+
+        .hero-content {
+            padding-right: var(--space-12);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--color-primary-50);
+            color: var(--color-primary-700);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            font-weight: 500;
+            margin-bottom: var(--space-8);
+            border: 1px solid var(--color-primary-100);
+            backdrop-filter: var(--blur-sm);
+        }
+
+        .hero-description {
+            color: var(--color-dark-600);
+            margin: var(--space-6) 0 var(--space-10);
+            max-width: 600px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-12);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-8);
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .stat {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            opacity: 0;
-            transform: translateY(30px);
         }
 
-        .icon-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            color: var(--color-dark-900);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-dark-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: var(--space-2);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 600px;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-2xl);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all var(--transition-base);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .floating-element::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .floating-element:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2xl), var(--shadow-glow);
+        }
+
+        .element-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--color-primary-50);
+            border-radius: var(--radius-xl);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: var(--gold);
-            transition: var(--transition);
+            margin-bottom: var(--space-4);
+            color: var(--color-primary-600);
+            font-size: var(--font-size-2xl);
         }
 
-        .hero-icon:hover .icon-circle {
-            background: rgba(212, 175, 55, 0.1);
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .icon-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-        }
-
-        /* Premium Services Section */
+        /* Services Section */
         .services {
-            background-color: var(--platinum);
-            position: relative;
+            background: white;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: var(--space-16);
         }
 
-        .section-header h2 {
-            color: var(--navy);
+        .section-title {
+            margin-bottom: var(--space-4);
         }
 
-        .section-subtitle {
-            color: var(--gray);
-            max-width: 700px;
+        .section-description {
+            color: var(--color-dark-600);
+            max-width: 800px;
             margin: 0 auto;
-            font-size: 1.25rem;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: var(--space-8);
         }
 
         .service-card {
             background: white;
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--platinum-dark);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all var(--transition-base);
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
         }
 
         .service-card::before {
@@ -521,342 +624,298 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+            z-index: -1;
         }
 
         .service-card:hover {
-            transform: translateY(-15px);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2xl);
+            border-color: transparent;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.02;
         }
 
         .service-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 18px;
+            width: 64px;
+            height: 64px;
+            background: var(--color-primary-50);
+            border-radius: var(--radius-xl);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
+            margin-bottom: var(--space-6);
+            color: var(--color-primary-600);
+            font-size: var(--font-size-2xl);
+        }
+
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-top: var(--space-6);
+        }
+
+        .tag {
+            background: var(--color-primary-50);
+            color: var(--color-primary-700);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        /* Network Section with 3D Globe */
+        .network {
+            background: var(--color-dark-900);
             color: white;
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            box-shadow: var(--shadow);
-        }
-
-        .service-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--navy);
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: 1.5rem;
             position: relative;
-            padding-bottom: 5px;
+            overflow: hidden;
         }
 
-        .service-link::after {
+        .network::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-            transition: width 0.3s ease;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(66, 133, 244, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .service-link:hover::after {
+        .network .section-title,
+        .network .section-description {
+            color: white;
+        }
+
+        .network .section-description {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .globe-container {
+            position: relative;
+            height: 600px;
+            margin: var(--space-16) 0;
+        }
+
+        #globeCanvas {
             width: 100%;
+            height: 100%;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
         }
 
-        /* Why GlobexIP Section */
-        .why-us {
-            background: white;
+        .network-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-6);
         }
 
-        .why-content {
+        .network-stat {
+            text-align: center;
+            padding: var(--space-8);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: var(--blur-md);
+            transition: all var(--transition-base);
+        }
+
+        .network-stat:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        /* Calculator Section */
+        .calculator {
+            background: linear-gradient(135deg, #F8FAFC 0%, #EDF2F7 100%);
+        }
+
+        .calculator-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
+            gap: var(--space-12);
+            align-items: start;
         }
 
-        .pillars {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .pillar {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-        }
-
-        .pillar-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .pillar-text h4 {
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-        }
-
-        .pillar-text p {
-            color: var(--gray);
-            font-size: 1rem;
-            margin-bottom: 0;
-        }
-
-        .illustration {
-            position: relative;
-            height: 500px;
-            background: linear-gradient(135deg, var(--platinum) 0%, #ffffff 100%);
-            border-radius: var(--border-radius-xl);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .line-art {
-            width: 80%;
-            height: 80%;
-            position: relative;
-        }
-
-        .line {
-            position: absolute;
-            background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
-            height: 2px;
-            border-radius: 1px;
-            animation: drawLine 2s ease-in-out infinite alternate;
-        }
-
-        .line-1 { top: 20%; left: 10%; width: 60%; animation-delay: 0s; }
-        .line-2 { top: 40%; left: 20%; width: 50%; animation-delay: 0.5s; }
-        .line-3 { top: 60%; left: 15%; width: 55%; animation-delay: 1s; }
-        .line-4 { top: 80%; left: 25%; width: 45%; animation-delay: 1.5s; }
-
-        @keyframes drawLine {
-            0% { width: 0; opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Case Studies Slider */
-        .case-studies {
-            background-color: var(--platinum);
-        }
-
-        .cases-slider {
-            display: flex;
-            gap: 2.5rem;
-            overflow-x: auto;
-            padding: 1rem 0.5rem;
-            scrollbar-width: none;
-        }
-
-        .cases-slider::-webkit-scrollbar {
-            display: none;
-        }
-
-        .case-card {
+        .calculator-form {
             background: white;
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--platinum-dark);
-            min-width: 380px;
-            opacity: 0;
-            transform: translateX(30px);
-        }
-
-        .case-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .case-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(10, 25, 47, 0.05);
-            border-radius: 50px;
-            color: var(--navy);
-            font-weight: 600;
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .case-tag i {
-            color: var(--gold);
-        }
-
-        .case-outcome {
-            font-size: 1.75rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-
-        .case-meta {
-            display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--platinum-dark);
-        }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .meta-label {
-            font-size: 0.875rem;
-            color: var(--gray);
-            margin-bottom: 0.25rem;
-        }
-
-        .meta-value {
-            font-weight: 600;
-            color: var(--navy);
-        }
-
-        /* Cost Calculator */
-        .calculator {
-            background: white;
-        }
-
-        .calc-container {
-            background: var(--platinum);
-            border-radius: var(--border-radius-xl);
-            padding: 4rem;
-            box-shadow: var(--shadow);
-        }
-
-        .calc-form {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-xl);
         }
 
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
+            margin-bottom: var(--space-6);
         }
 
-        .form-group label {
-            font-weight: 600;
-            color: var(--navy);
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--color-dark-800);
+            margin-bottom: var(--space-2);
         }
 
-        .form-select, .form-input {
-            padding: 1rem 1.25rem;
-            border: 1px solid var(--platinum-dark);
-            border-radius: var(--border-radius);
-            font-size: 1.125rem;
+        .form-select {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
             background: white;
-            color: var(--navy);
-            transition: var(--transition-fast);
+            border: 2px solid var(--color-dark-200);
+            border-radius: var(--radius-lg);
+            font-family: var(--font-sans);
+            font-size: var(--font-size-base);
+            color: var(--color-dark-800);
+            transition: all var(--transition-fast);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235F6368'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
         }
 
-        .form-select:focus, .form-input:focus {
+        .form-select:focus {
             outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
         }
 
-        .calc-result {
-            background: white;
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--shadow);
-            border: 2px solid var(--gold);
-            opacity: 0;
-            transform: translateY(20px);
+        .calculator-result {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            color: white;
+            box-shadow: var(--shadow-2xl);
+            position: sticky;
+            top: var(--space-8);
         }
 
         .result-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: var(--space-6);
         }
 
-        .estimated-cost {
-            font-size: 2.5rem;
+        .result-amount {
+            font-family: var(--font-display);
+            font-size: var(--font-size-5xl);
             font-weight: 700;
-            color: var(--navy);
+            line-height: 1;
         }
 
-        .result-details {
+        .result-breakdown {
+            display: grid;
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Case Studies */
+        .cases {
+            background: white;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: var(--space-8);
+        }
+
+        .case-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            transition: all var(--transition-base);
+        }
+
+        .case-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .case-header {
+            padding: var(--space-6);
+            background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-primary-100) 100%);
+        }
+
+        .case-category {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--color-primary-100);
+            color: var(--color-primary-700);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+
+        .case-content {
+            padding: var(--space-6);
+        }
+
+        .case-outcome {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--color-dark-900);
+            margin-bottom: var(--space-4);
+            line-height: 1.4;
+        }
+
+        .case-metrics {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--platinum-dark);
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+            padding-top: var(--space-6);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         /* Testimonials */
         .testimonials {
-            background-color: var(--platinum);
+            background: linear-gradient(135deg, #F8FAFC 0%, #EDF2F7 100%);
         }
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: var(--space-8);
         }
 
         .testimonial-card {
             background: white;
-            border-radius: var(--border-radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--shadow);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-lg);
             position: relative;
-            opacity: 0;
-            transform: translateY(30px);
         }
 
         .testimonial-card::before {
             content: '"';
             position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            font-size: 5rem;
-            color: rgba(212, 175, 55, 0.1);
+            top: var(--space-6);
+            right: var(--space-6);
+            font-size: var(--font-size-7xl);
+            color: var(--color-primary-50);
             font-family: Georgia, serif;
             line-height: 1;
         }
 
-        .testimonial-text {
-            font-size: 1.125rem;
-            color: var(--gray-dark);
+        .testimonial-content {
+            color: var(--color-dark-700);
             font-style: italic;
-            margin-bottom: 2rem;
+            margin-bottom: var(--space-6);
             position: relative;
             z-index: 1;
         }
@@ -864,689 +923,860 @@
         .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: var(--space-4);
         }
 
         .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-full);
+            background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-
-        .author-info h4 {
-            margin-bottom: 0.25rem;
-        }
-
-        .author-info p {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 0;
-        }
-
-        .stars {
-            display: flex;
-            gap: 0.25rem;
-            color: var(--gold);
-            margin-top: 0.5rem;
-        }
-
-        /* Resources */
-        .resources {
-            background: white;
-        }
-
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-
-        .resource-card {
-            background: white;
-            border-radius: var(--border-radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--platinum-dark);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .resource-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .resource-img {
-            height: 200px;
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-
-        .resource-content {
-            padding: 2rem;
-        }
-
-        .resource-tag {
-            display: inline-block;
-            padding: 0.375rem 1rem;
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold);
-            border-radius: 50px;
-            font-size: 0.875rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            font-size: var(--font-size-xl);
         }
 
         /* Contact Section */
         .contact {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-            color: white;
+            background: white;
         }
 
-        .contact-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .contact-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: var(--border-radius-xl);
-            padding: 4rem;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-xl);
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-12);
         }
 
         .contact-form {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .form-full {
-            grid-column: 1 / -1;
+        .form-input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: white;
+            border: 2px solid var(--color-dark-200);
+            border-radius: var(--radius-lg);
+            font-family: var(--font-sans);
+            font-size: var(--font-size-base);
+            color: var(--color-dark-800);
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
         }
 
         .contact-info {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            padding-top: 3rem;
-            border-top: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
         }
 
-        .info-item {
-            text-align: center;
+        .info-card {
+            background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-primary-100) 100%);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-6);
+            border: 1px solid var(--color-primary-200);
+            transition: all var(--transition-base);
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            margin-bottom: var(--space-3);
         }
 
         .info-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(212, 175, 55, 0.1);
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: var(--gold);
-            font-size: 1.5rem;
-        }
-
-        /* Premium Footer */
-        footer {
-            background: var(--navy);
             color: white;
-            padding: 5rem 0 3rem;
+            font-size: var(--font-size-xl);
         }
 
-        .footer-content {
+        /* Footer */
+        .footer {
+            background: var(--color-dark-900);
+            color: white;
+            padding: var(--space-16) 0 var(--space-8);
+        }
+
+        .footer-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4rem;
-            margin-bottom: 4rem;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-12);
+            margin-bottom: var(--space-16);
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
         }
 
         .footer-logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
+            gap: var(--space-3);
         }
 
-        .footer-logo .logo-icon {
+        .footer-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+
+        .social-link {
             width: 40px;
             height: 40px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all var(--transition-base);
         }
 
-        .footer-about p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
+        .social-link:hover {
+            background: var(--color-primary-500);
+            transform: translateY(-2px);
         }
 
         .footer-heading {
-            font-size: 1.125rem;
-            margin-bottom: 1.5rem;
+            font-size: var(--font-size-lg);
+            font-weight: 600;
             color: white;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-
-        .footer-heading::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 30px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            margin-bottom: var(--space-4);
         }
 
         .footer-links {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
         }
 
-        .footer-links li {
-            margin-bottom: 0.875rem;
-        }
-
-        .footer-links a {
+        .footer-link {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            transition: var(--transition-fast);
-            font-size: 0.95rem;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .certifications {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-        }
-
-        .cert-badge {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            transition: all var(--transition-fast);
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.875rem;
+            gap: var(--space-2);
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateX(4px);
         }
 
         .footer-bottom {
-            text-align: center;
-            padding-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--space-8);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.5);
-            font-size: 0.875rem;
         }
 
-        /* Responsive */
+        /* Animations */
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Responsive Design */
         @media (max-width: 1200px) {
-            h1 { font-size: 3.5rem; }
-            h2 { font-size: 2.5rem; }
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
-            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
-            .resources-grid { grid-template-columns: repeat(2, 1fr); }
+            .display-1 {
+                font-size: var(--font-size-6xl);
+            }
+            
+            .display-2 {
+                font-size: var(--font-size-5xl);
+            }
+            
+            .hero-grid,
+            .calculator-container,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-12);
+            }
+            
+            .hero-visual {
+                height: 500px;
+                order: -1;
+            }
         }
 
         @media (max-width: 992px) {
-            .mobile-menu-btn { display: flex; }
-            nav { display: none; }
-            nav.active { display: block; position: absolute; top: 100%; left: 0; width: 100%; background: var(--navy); padding: 2rem; }
-            nav ul { flex-direction: column; gap: 1.5rem; }
-            .mega-menu { display: none; }
-            .why-content { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: repeat(2, 1fr); }
+            .display-1 {
+                font-size: var(--font-size-5xl);
+            }
+            
+            .display-2 {
+                font-size: var(--font-size-4xl);
+            }
+            
+            section {
+                padding: var(--space-16) 0;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-8);
+            }
+            
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
-            section { padding: 5rem 0; }
-            h1 { font-size: 2.75rem; }
-            h2 { font-size: 2.25rem; }
-            .hero { padding-top: 10rem; min-height: auto; }
-            .hero-buttons { flex-direction: column; }
-            .services-grid, .testimonials-grid, .resources-grid { grid-template-columns: 1fr; }
-            .contact-form { grid-template-columns: 1fr; }
-            .contact-info { grid-template-columns: 1fr; }
-            .calc-form { grid-template-columns: 1fr; }
-            .result-details { grid-template-columns: 1fr; }
+            .display-1 {
+                font-size: var(--font-size-4xl);
+            }
+            
+            .display-2 {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .container {
+                padding: 0 var(--space-4);
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                gap: var(--space-4);
+                padding: var(--space-6);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all var(--transition-base);
+                box-shadow: var(--shadow-2xl);
+                border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+                z-index: var(--z-fixed);
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .services-grid,
+            .cases-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .display-1 {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .display-2 {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: var(--space-4);
+                text-align: center;
+            }
+            
+            .globe-container {
+                height: 400px;
+            }
+        }
+
+        /* Utility Classes */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .sr-only {
+            @extend .visually-hidden;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: var(--space-1); }
+        .mt-2 { margin-top: var(--space-2); }
+        .mt-4 { margin-top: var(--space-4); }
+        .mt-6 { margin-top: var(--space-6); }
+        .mt-8 { margin-top: var(--space-8); }
+        .mt-12 { margin-top: var(--space-12); }
+
+        .mb-1 { margin-bottom: var(--space-1); }
+        .mb-2 { margin-bottom: var(--space-2); }
+        .mb-4 { margin-bottom: var(--space-4); }
+        .mb-6 { margin-bottom: var(--space-6); }
+        .mb-8 { margin-bottom: var(--space-8); }
+        .mb-12 { margin-bottom: var(--space-12); }
+
+        .py-8 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+        .py-12 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+        .py-16 { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+
+        /* Loading States */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Focus States for Accessibility */
+        .focus-visible {
+            outline: 2px solid var(--color-primary-500);
+            outline-offset: 2px;
+        }
+
+        /* Dark Mode Support (Optional) */
+        @media (prefers-color-scheme: dark) {
+            :root:not(.light-mode) {
+                --color-dark-50: #1A1A1A;
+                --color-dark-100: #2D2D2D;
+                --color-dark-200: #404040;
+                --color-dark-300: #525252;
+                --color-dark-400: #666666;
+                --color-dark-500: #808080;
+                --color-dark-600: #999999;
+                --color-dark-700: #B3B3B3;
+                --color-dark-800: #CCCCCC;
+                --color-dark-900: #FFFFFF;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Premium Navigation with Mega Menu -->
-    <header>
-        <div class="container">
-            <div class="header-container">
-                <a href="#" class="logo">
-                    <div class="logo-icon">G</div>
-                    <div class="logo-text">Globex<span>IP</span></div>
-                </a>
-                
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#home" class="active">Home</a></li>
-                        <li><a href="#services" id="servicesLink">Services</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#resources">Resources</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li class="nav-cta">
-                            <a href="#contact" class="btn btn-primary">
-                                <i class="fas fa-calendar-alt"></i>
-                                Book Consultation
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        
-        <!-- Mega Menu -->
-        <div class="mega-menu" id="megaMenu">
-            <div class="container">
-                <div class="mega-menu-content">
-                    <div class="mega-menu-column">
-                        <h4>Patent Filing</h4>
-                        <ul class="mega-menu-links">
-                            <li><a href="#"><i class="fas fa-passport"></i> Indian Patent Filing</a></li>
-                            <li><a href="#"><i class="fas fa-globe-americas"></i> US Patent Filing</a></li>
-                            <li><a href="#"><i class="fas fa-flag-eu"></i> European Patent</a></li>
-                            <li><a href="#"><i class="fas fa-flag"></i> China Patent</a></li>
-                            <li><a href="#"><i class="fas fa-globe"></i> International PCT</a></li>
-                        </ul>
-                    </div>
-                    <div class="mega-menu-column">
-                        <h4>IP Services</h4>
-                        <ul class="mega-menu-links">
-                            <li><a href="#"><i class="fas fa-file-alt"></i> Patent Drafting</a></li>
-                            <li><a href="#"><i class="fas fa-search"></i> Patent Search</a></li>
-                            <li><a href="#"><i class="fas fa-chart-line"></i> Patent Analytics</a></li>
-                            <li><a href="#"><i class="fas fa-tasks"></i> IP Strategy</a></li>
-                            <li><a href="#"><i class="fas fa-shield-alt"></i> IP Protection</a></li>
-                        </ul>
-                    </div>
-                    <div class="mega-menu-column">
-                        <h4>Enterprise Solutions</h4>
-                        <ul class="mega-menu-links">
-                            <li><a href="#"><i class="fas fa-building"></i> Corporate IP</a></li>
-                            <li><a href="#"><i class="fas fa-rocket"></i> Startup Packages</a></li>
-                            <li><a href="#"><i class="fas fa-university"></i> Research Institutes</a></li>
-                            <li><a href="#"><i class="fas fa-handshake"></i> IP Licensing</a></li>
-                            <li><a href="#"><i class="fas fa-database"></i> Portfolio Management</a></li>
-                        </ul>
-                    </div>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="container nav-container">
+            <a href="#home" class="nav-logo">
+                <div class="logo-mark">G</div>
+                <div class="logo-text">Globex<span>IP</span></div>
+            </a>
+            
+            <div class="nav-menu" id="navMenu">
+                <div class="nav-item">
+                    <a href="#home" class="nav-link active">Home</a>
                 </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Ultra-Premium Hero -->
-    <section class="hero" id="home">
-        <div class="world-map"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1>Global Patent Filing <span>Made Effortless.</span></h1>
-                <p>India & International IP Protection for Inventors, Startups, and Enterprises. Fast, accurate, and fully compliant global patent filing services.</p>
-                
-                <div class="hero-buttons">
+                <div class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#network" class="nav-link">Network</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#calculator" class="nav-link">Calculator</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#cases" class="nav-link">Cases</a>
+                </div>
+                <div class="nav-cta">
                     <a href="#contact" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i>
-                        Start Filing
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
                         <i class="fas fa-calendar-check"></i>
-                        Free Consultation
+                        Book Demo
                     </a>
                 </div>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background"></div>
+        <div class="container hero-container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-shield-check"></i>
+                        Enterprise-Grade Security
+                    </div>
+                    
+                    <h1 class="display-1">
+                        <span class="text-gradient">AI-Powered</span>
+                        <br>Global IP Protection
+                    </h1>
+                    
+                    <p class="hero-description body-lg">
+                        Secure your intellectual property across 150+ countries with our intelligent platform. 
+                        Machine learning meets legal expertise for unprecedented patent protection.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <a href="#calculator" class="btn btn-primary">
+                            <i class="fas fa-bolt"></i>
+                            Get Instant Quote
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-play-circle"></i>
+                            Watch Demo
+                        </a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-value">10+</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">98.2%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Patents Filed</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">AI Monitoring</div>
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="hero-icons">
-                    <div class="hero-icon">
-                        <div class="icon-circle">
+                <div class="hero-visual">
+                    <div class="floating-element" style="top: 0; right: 0; width: 320px;">
+                        <div class="element-icon">
                             <i class="fas fa-file-contract"></i>
                         </div>
-                        <span class="icon-label">Patent Drafting</span>
+                        <h4 class="heading-4">AI Patent Drafting</h4>
+                        <p class="body-sm">Advanced algorithms create bulletproof patent applications in hours, not weeks.</p>
                     </div>
-                    <div class="hero-icon">
-                        <div class="icon-circle">
+                    
+                    <div class="floating-element" style="top: 180px; right: 200px; width: 300px;">
+                        <div class="element-icon">
                             <i class="fas fa-globe"></i>
                         </div>
-                        <span class="icon-label">Global Filing</span>
+                        <h4 class="heading-4">Global Filing</h4>
+                        <p class="body-sm">Simultaneous filing across multiple jurisdictions with local compliance.</p>
                     </div>
-                    <div class="hero-icon">
-                        <div class="icon-circle">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <span class="icon-label">IP Search</span>
-                    </div>
-                    <div class="hero-icon">
-                        <div class="icon-circle">
+                    
+                    <div class="floating-element" style="top: 360px; right: 80px; width: 340px;">
+                        <div class="element-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <span class="icon-label">IP Protection</span>
+                        <h4 class="heading-4">IP Protection</h4>
+                        <p class="body-sm">Comprehensive monitoring and enforcement of your intellectual property rights.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Premium Services -->
+    <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
             <div class="section-header">
-                <h2>Our <span class="text-gradient">Premium Services</span></h2>
-                <p class="section-subtitle">Comprehensive intellectual property services with global expertise and local precision.</p>
+                <h2 class="section-title display-2">Intelligent <span class="text-gradient">IP Services</span></h2>
+                <p class="section-description body-lg">
+                    Our platform combines human expertise with artificial intelligence to deliver 
+                    unprecedented results in intellectual property protection.
+                </p>
             </div>
             
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-passport"></i>
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Patent Filing</h3>
-                    <p>Complete Indian and international patent filing with expert prosecution services across 40+ countries.</p>
-                    <a href="#" class="service-link">
-                        Learn More
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-file-alt"></i>
+                    <h3 class="heading-3">AI Patent Analytics</h3>
+                    <p class="body-base">Predictive analytics and machine learning algorithms analyze millions of patents to identify trends and opportunities.</p>
+                    <div class="service-tags">
+                        <span class="tag">Predictive Modeling</span>
+                        <span class="tag">Market Intelligence</span>
+                        <span class="tag">Trend Analysis</span>
                     </div>
-                    <h3>Patent Drafting</h3>
-                    <p>Professional patent specification drafting by technical experts with legal precision.</p>
-                    <a href="#" class="service-link">
-                        Learn More
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <h3>Patent Search</h3>
-                    <p>Prior art, patentability, and freedom-to-operate searches with comprehensive analysis.</p>
-                    <a href="#" class="service-link">
-                        Learn More
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <h3 class="heading-3">Intelligent Patent Search</h3>
+                    <p class="body-base">Natural language processing and semantic search across global patent databases with 99.9% accuracy.</p>
+                    <div class="service-tags">
+                        <span class="tag">Semantic Search</span>
+                        <span class="tag">NLP Processing</span>
+                        <span class="tag">Real-time Results</span>
+                    </div>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-globe"></i>
                     </div>
-                    <h3>PCT Filing</h3>
-                    <p>International patent protection through PCT with strategic national phase guidance.</p>
-                    <a href="#" class="service-link">
-                        Learn More
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <h3 class="heading-3">Global Filing Platform</h3>
+                    <p class="body-base">Unified platform for filing and managing patents across 150+ countries with automated compliance.</p>
+                    <div class="service-tags">
+                        <span class="tag">Unified Dashboard</span>
+                        <span class="tag">Automated Compliance</span>
+                        <span class="tag">Local Expertise</span>
+                    </div>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-chess-board"></i>
+                        <i class="fas fa-shield"></i>
                     </div>
-                    <h3>IP Strategy</h3>
-                    <p>Strategic IP consulting, portfolio management, and competitive intelligence.</p>
-                    <a href="#" class="service-link">
-                        Learn More
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <h3 class="heading-3">IP Protection Suite</h3>
+                    <p class="body-base">Comprehensive protection including monitoring, enforcement, and defense against infringement.</p>
+                    <div class="service-tags">
+                        <span class="tag">24/7 Monitoring</span>
+                        <span class="tag">Enforcement Support</span>
+                        <span class="tag">Legal Defense</span>
+                    </div>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-chart-network"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Technology Mapping</h3>
-                    <p>Comprehensive technology landscape analysis and innovation protection strategy.</p>
-                    <a href="#" class="service-link">
-                        Learn More
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <h3 class="heading-3">Portfolio Management</h3>
+                    <p class="body-base">Strategic management and optimization of patent portfolios for maximum value and protection.</p>
+                    <div class="service-tags">
+                        <span class="tag">Portfolio Strategy</span>
+                        <span class="tag">Value Optimization</span>
+                        <span class="tag">Risk Assessment</span>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="heading-3">IP Commercialization</h3>
+                    <p class="body-base">Strategic partnerships, licensing, and monetization of intellectual property assets.</p>
+                    <div class="service-tags">
+                        <span class="tag">Licensing Support</span>
+                        <span class="tag">Partner Matching</span>
+                        <span class="tag">Revenue Optimization</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why GlobexIP -->
-    <section class="why-us">
+    <!-- Network Section -->
+    <section class="network" id="network">
         <div class="container">
-            <div class="why-content">
-                <div class="pillars">
-                    <div class="pillar">
-                        <div class="pillar-icon">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <div class="pillar-text">
-                            <h4>Accuracy & Precision</h4>
-                            <p>Every patent application undergoes rigorous technical and legal review to ensure 100% accuracy.</p>
-                        </div>
+            <div class="section-header">
+                <h2 class="section-title display-2">Global <span class="text-gradient">Network</span></h2>
+                <p class="section-description body-lg">
+                    Our presence in 150+ countries ensures seamless IP protection wherever your innovations go.
+                </p>
+            </div>
+            
+            <div class="globe-container">
+                <canvas id="globeCanvas"></canvas>
+            </div>
+            
+            <div class="network-stats">
+                <div class="network-stat">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Countries Covered</div>
+                </div>
+                <div class="network-stat">
+                    <div class="stat-value">15+</div>
+                    <div class="stat-label">Local Partners</div>
+                </div>
+                <div class="network-stat">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Global Support</div>
+                </div>
+                <div class="network-stat">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">Client Retention</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator" id="calculator">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title display-2">Intelligence <span class="text-gradient">Calculator</span></h2>
+                <p class="section-description body-lg">
+                    Get an instant, accurate estimate for your global patent protection needs.
+                </p>
+            </div>
+            
+            <div class="calculator-container">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label class="form-label">Jurisdiction Coverage</label>
+                        <select class="form-select" id="jurisdiction">
+                            <option value="single">Single Country</option>
+                            <option value="regional">Regional (e.g., EU)</option>
+                            <option value="global" selected>Global (150+ Countries)</option>
+                            <option value="custom">Custom Selection</option>
+                        </select>
                     </div>
                     
-                    <div class="pillar">
-                        <div class="pillar-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <div class="pillar-text">
-                            <h4>Global Expertise</h4>
-                            <p>Local attorneys in 40+ countries providing seamless international patent protection.</p>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">Technology Category</label>
+                        <select class="form-select" id="technology">
+                            <option value="software">Software & AI</option>
+                            <option value="biotech">Biotechnology</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="chemical">Chemical</option>
+                        </select>
                     </div>
                     
-                    <div class="pillar">
-                        <div class="pillar-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <div class="pillar-text">
-                            <h4>100% Confidential</h4>
-                            <p>Enterprise-grade security and strict NDAs to protect your intellectual property.</p>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">Service Level</label>
+                        <select class="form-select" id="serviceLevel">
+                            <option value="basic">Basic Filing</option>
+                            <option value="standard">Standard Protection</option>
+                            <option value="premium">Premium (AI Enhanced)</option>
+                            <option value="enterprise">Enterprise Suite</option>
+                        </select>
                     </div>
                     
-                    <div class="pillar">
-                        <div class="pillar-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="pillar-text">
-                            <h4>Speed & Efficiency</h4>
-                            <p>Average patent drafting in 10-15 business days with real-time tracking.</p>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">Additional Services</label>
+                        <select class="form-select" id="additionalServices" multiple>
+                            <option value="search">Prior Art Search</option>
+                            <option value="monitoring">24/7 Monitoring</option>
+                            <option value="enforcement">Enforcement Support</option>
+                            <option value="licensing">Licensing Assistance</option>
+                        </select>
                     </div>
                 </div>
                 
-                <div class="illustration">
-                    <div class="line-art">
-                        <div class="line line-1"></div>
-                        <div class="line line-2"></div>
-                        <div class="line line-3"></div>
-                        <div class="line line-4"></div>
+                <div class="calculator-result">
+                    <div class="result-header">
+                        <div>
+                            <h3 class="heading-3">Estimated Investment</h3>
+                            <p class="body-sm">All-inclusive pricing with no hidden fees</p>
+                        </div>
+                        <div class="result-amount">$49,850</div>
                     </div>
+                    
+                    <div class="result-breakdown">
+                        <div class="breakdown-item">
+                            <span class="body-base">Global Filing Fees</span>
+                            <span class="body-base">$28,500</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="body-base">AI Drafting & Analysis</span>
+                            <span class="body-base">$12,750</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="body-base">Compliance & Translation</span>
+                            <span class="body-base">$6,200</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="body-base">Monitoring & Support</span>
+                            <span class="body-base">$2,400</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="btn btn-glass" style="width: 100%; margin-top: var(--space-8);">
+                        <i class="fas fa-lock"></i>
+                        Secure This Package
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Case Studies -->
-    <section class="case-studies">
+    <section class="cases" id="cases">
         <div class="container">
             <div class="section-header">
-                <h2>Success <span class="text-gradient">Stories</span></h2>
-                <p class="section-subtitle">Real results from our clients across industries and geographies.</p>
+                <h2 class="section-title display-2">Success <span class="text-gradient">Stories</span></h2>
+                <p class="section-description body-lg">
+                    Real results from global innovators who trust us with their intellectual property.
+                </p>
             </div>
             
-            <div class="cases-slider">
+            <div class="cases-grid">
                 <div class="case-card">
-                    <div class="case-tag">
-                        <i class="fas fa-flask"></i>
-                        Biotechnology
+                    <div class="case-header">
+                        <div class="case-category">
+                            <i class="fas fa-dna"></i>
+                            Biotechnology
+                        </div>
                     </div>
-                    <h3 class="case-outcome">Patent granted in 18 months across US, EU, and India</h3>
-                    <p>Successfully secured protection for a novel drug delivery system with broad claims in key markets.</p>
-                    <div class="case-meta">
-                        <div class="meta-item">
-                            <div class="meta-label">Region</div>
-                            <div class="meta-value">US, EU, India</div>
-                        </div>
-                        <div class="meta-item">
-                            <div class="meta-label">Timeline</div>
-                            <div class="meta-value">18 Months</div>
-                        </div>
-                        <div class="meta-item">
-                            <div class="meta-label">Client</div>
-                            <div class="meta-value">Research Institute</div>
+                    <div class="case-content">
+                        <h3 class="case-outcome">Global Patent Portfolio for CRISPR Startup</h3>
+                        <p class="body-base">Secured 42 patents across 18 countries for a groundbreaking gene-editing technology, enabling $120M Series B funding.</p>
+                        <div class="case-metrics">
+                            <div class="stat">
+                                <div class="stat-value">42</div>
+                                <div class="stat-label">Patents</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">18</div>
+                                <div class="stat-label">Countries</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">6</div>
+                                <div class="stat-label">Months</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="case-card">
-                    <div class="case-tag">
-                        <i class="fas fa-microchip"></i>
-                        Software & AI
+                    <div class="case-header">
+                        <div class="case-category">
+                            <i class="fas fa-robot"></i>
+                            Artificial Intelligence
+                        </div>
                     </div>
-                    <h3 class="case-outcome">PCT filing with 12 national phase entries</h3>
-                    <p>Protected a machine learning algorithm with strategic claims that survived examination in all jurisdictions.</p>
-                    <div class="case-meta">
-                        <div class="meta-item">
-                            <div class="meta-label">Region</div>
-                            <div class="meta-value">PCT + 12 Countries</div>
-                        </div>
-                        <div class="meta-item">
-                            <div class="meta-label">Timeline</div>
-                            <div class="meta-value">24 Months</div>
-                        </div>
-                        <div class="meta-item">
-                            <div class="meta-label">Client</div>
-                            <div class="meta-value">Tech Startup</div>
+                    <div class="case-content">
+                        <h3 class="case-outcome">AI Patent Strategy for Enterprise</h3>
+                        <p class="body-base">Developed comprehensive patent strategy for Fortune 500 company, resulting in 150% increase in patent value.</p>
+                        <div class="case-metrics">
+                            <div class="stat">
+                                <div class="stat-value">85</div>
+                                <div class="stat-label">Patents Filed</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">150%</div>
+                                <div class="stat-label">Value Increase</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Months</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="case-card">
-                    <div class="case-tag">
-                        <i class="fas fa-industry"></i>
-                        Manufacturing
-                    </div>
-                    <h3 class="case-outcome">Portfolio of 8 patents for industrial innovation</h3>
-                    <p>Built a comprehensive patent portfolio protecting core manufacturing processes and equipment.</p>
-                    <div class="case-meta">
-                        <div class="meta-item">
-                            <div class="meta-label">Region</div>
-                            <div class="meta-value">Global</div>
-                        </div>
-                        <div class="meta-item">
-                            <div class="meta-label">Patents</div>
-                            <div class="meta-value">8 Granted</div>
-                        </div>
-                        <div class="meta-item">
-                            <div class="meta-label">Client</div>
-                            <div class="meta-value">Enterprise</div>
+                    <div class="case-header">
+                        <div class="case-category">
+                            <i class="fas fa-bolt"></i>
+                            Clean Energy
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Patent Cost Calculator -->
-    <section class="calculator" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2>Patent Cost <span class="text-gradient">Calculator</span></h2>
-                <p class="section-subtitle">Get an instant estimate for your patent filing requirements.</p>
-            </div>
-            
-            <div class="calc-container">
-                <form class="calc-form" id="costCalculator">
-                    <div class="form-group">
-                        <label for="jurisdiction">Jurisdiction</label>
-                        <select class="form-select" id="jurisdiction">
-                            <option value="india">India</option>
-                            <option value="us">United States</option>
-                            <option value="eu">European Union</option>
-                            <option value="china">China</option>
-                            <option value="pct">PCT International</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="type">Patent Type</label>
-                        <select class="form-select" id="type">
-                            <option value="utility">Utility Patent</option>
-                            <option value="design">Design Patent</option>
-                            <option value="software">Software Patent</option>
-                            <option value="biotech">Biotechnology</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="complexity">Complexity Level</label>
-                        <select class="form-select" id="complexity">
-                            <option value="simple">Simple Invention</option>
-                            <option value="medium">Medium Complexity</option>
-                            <option value="complex">Complex Technology</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="search">Include Prior Art Search?</label>
-                        <select class="form-select" id="search">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                </form>
-                
-                <div class="calc-result" id="costResult">
-                    <div class="result-header">
-                        <h3>Estimated Cost</h3>
-                        <div class="estimated-cost">₹ 85,000 - ₹ 1,20,000</div>
-                    </div>
-                    <p>This estimate includes professional fees, government fees, and basic drawings. Final cost may vary based on specific requirements.</p>
-                    
-                    <div class="result-details">
-                        <div class="detail-item">
-                            <div class="meta-label">Professional Fees</div>
-                            <div class="meta-value">₹ 45,000 - 65,000</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="meta-label">Government Fees</div>
-                            <div class="meta-value">₹ 25,000 - 35,000</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="meta-label">Additional Services</div>
-                            <div class="meta-value">₹ 15,000 - 20,000</div>
+                    <div class="case-content">
+                        <h3 class="case-outcome">Global Protection for Solar Technology</h3>
+                        <p class="body-base">Successfully protected innovative solar panel technology in 32 countries, preventing $45M in potential infringement.</p>
+                        <div class="case-metrics">
+                            <div class="stat">
+                                <div class="stat-value">32</div>
+                                <div class="stat-label">Countries</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$45M</div>
+                                <div class="stat-label">Infringement Prevented</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">9</div>
+                                <div class="stat-label">Months</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1558,113 +1788,49 @@
     <section class="testimonials">
         <div class="container">
             <div class="section-header">
-                <h2>Client <span class="text-gradient">Testimonials</span></h2>
-                <p class="section-subtitle">What innovators and enterprises say about our services.</p>
+                <h2 class="section-title display-2">Client <span class="text-gradient">Testimonials</span></h2>
+                <p class="section-description body-lg">
+                    Hear from industry leaders who have transformed their IP strategy with our platform.
+                </p>
             </div>
             
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "GlobexIP transformed our IP strategy. Their global expertise helped us secure patents in 8 countries efficiently."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">R</div>
-                        <div class="author-info">
-                            <h4>Dr. Rohan Sharma</h4>
-                            <p>CTO, Biotech Startup</p>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "The team's attention to detail and prompt responses made the complex PCT filing process seamless for us."
+                    <div class="testimonial-content body-lg">
+                        "The AI-driven approach to patent analytics gave us insights we couldn't have obtained through traditional methods. Our portfolio valuation increased by 200% in 18 months."
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">S</div>
                         <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>Founder, AI Company</p>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
+                            <h4 class="heading-4">Dr. Sarah Chen</h4>
+                            <p class="body-sm">Chief Technology Officer, NeuroTech AI</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "Their strategic advice on patent portfolio management has been invaluable for our growth strategy."
+                    <div class="testimonial-content body-lg">
+                        "Global filing across 28 countries was seamless with their platform. The local expertise combined with AI efficiency saved us months of work and significant costs."
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">M</div>
                         <div class="author-info">
-                            <h4>Michael Rodriguez</h4>
-                            <p>IP Director, Manufacturing</p>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
+                            <h4 class="heading-4">Michael Rodriguez</h4>
+                            <p class="body-sm">IP Director, SolarEdge Technologies</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Resources -->
-    <section class="resources" id="resources">
-        <div class="container">
-            <div class="section-header">
-                <h2>Resource <span class="text-gradient">Hub</span></h2>
-                <p class="section-subtitle">Expert insights and guides on intellectual property protection.</p>
-            </div>
-            
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <div class="resource-img">
-                        <i class="fas fa-file-contract"></i>
-                    </div>
-                    <div class="resource-content">
-                        <span class="resource-tag">Guide</span>
-                        <h3>Indian Patent Filing Process</h3>
-                        <p>Step-by-step guide to filing patents in India with timelines and cost breakdown.</p>
-                    </div>
-                </div>
                 
-                <div class="resource-card">
-                    <div class="resource-img">
-                        <i class="fas fa-globe"></i>
+                <div class="testimonial-card">
+                    <div class="testimonial-content body-lg">
+                        "Their predictive analytics identified patent opportunities we had overlooked. The strategic guidance transformed our IP from a cost center to a revenue generator."
                     </div>
-                    <div class="resource-content">
-                        <span class="resource-tag">Whitepaper</span>
-                        <h3>PCT Filing Strategy</h3>
-                        <p>Optimizing international patent protection through the Patent Cooperation Treaty.</p>
-                    </div>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-img">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="resource-content">
-                        <span class="resource-tag">Research</span>
-                        <h3>AI Patent Trends 2023</h3>
-                        <p>Analysis of global patent filing trends in artificial intelligence and machine learning.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">J</div>
+                        <div class="author-info">
+                            <h4 class="heading-4">James Wilson</h4>
+                            <p class="body-sm">CEO, BioGen Innovations</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1675,15 +1841,17 @@
     <section class="contact" id="contact">
         <div class="container">
             <div class="section-header">
-                <h2>Get In <span class="text-gradient">Touch</span></h2>
-                <p class="section-subtitle">Contact us for a free consultation on your intellectual property needs.</p>
+                <h2 class="section-title display-2">Begin Your <span class="text-gradient">IP Journey</span></h2>
+                <p class="section-description body-lg">
+                    Schedule a consultation with our IP strategists to develop your custom protection plan.
+                </p>
             </div>
             
-            <div class="contact-container">
-                <div class="contact-card">
-                    <form class="contact-form">
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <form id="contactForm">
                         <div class="form-group">
-                            <input type="text" class="form-input" placeholder="Your Name" required>
+                            <input type="text" class="form-input" placeholder="Full Name" required>
                         </div>
                         <div class="form-group">
                             <input type="email" class="form-input" placeholder="Email Address" required>
@@ -1693,266 +1861,545 @@
                         </div>
                         <div class="form-group">
                             <select class="form-select">
-                                <option>Select Service</option>
-                                <option>Patent Filing</option>
-                                <option>Patent Search</option>
-                                <option>IP Strategy</option>
+                                <option>Select Your Industry</option>
+                                <option>Technology & Software</option>
+                                <option>Biotechnology & Pharma</option>
+                                <option>Manufacturing</option>
+                                <option>Energy & Cleantech</option>
                                 <option>Other</option>
                             </select>
                         </div>
-                        <div class="form-group form-full">
-                            <textarea class="form-input" placeholder="Your Message" rows="4"></textarea>
+                        <div class="form-group">
+                            <textarea class="form-input" rows="4" placeholder="Tell us about your innovation"></textarea>
                         </div>
-                        <div class="form-group form-full">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane"></i>
-                                Send Message
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i>
+                            Schedule Consultation
+                        </button>
                     </form>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="info-header">
+                            <div class="info-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div>
+                                <h4 class="heading-4">Expert Support</h4>
+                                <p class="body-sm">Available 24/7</p>
+                            </div>
+                        </div>
+                        <p class="body-base">Connect with IP strategists, attorneys, and AI specialists dedicated to your success.</p>
+                    </div>
                     
-                    <div class="contact-info">
-                        <div class="info-item">
+                    <div class="info-card">
+                        <div class="info-header">
                             <div class="info-icon">
-                                <i class="fas fa-phone"></i>
+                                <i class="fas fa-shield-alt"></i>
                             </div>
-                            <h4>Phone</h4>
-                            <p>+91 98765 43210</p>
+                            <div>
+                                <h4 class="heading-4">Security Guarantee</h4>
+                                <p class="body-sm">Military-Grade Encryption</p>
+                            </div>
                         </div>
-                        
-                        <div class="info-item">
+                        <p class="body-base">Your intellectual property is protected by enterprise-grade security and strict confidentiality agreements.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-header">
                             <div class="info-icon">
-                                <i class="fas fa-envelope"></i>
+                                <i class="fas fa-rocket"></i>
                             </div>
-                            <h4>Email</h4>
-                            <p>info@globexip.com</p>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <i class="fab fa-whatsapp"></i>
+                            <div>
+                                <h4 class="heading-4">Fast Response</h4>
+                                <p class="body-sm">Within 2 Business Hours</p>
                             </div>
-                            <h4>WhatsApp</h4>
-                            <p>+91 98765 43210</p>
                         </div>
+                        <p class="body-base">Our AI system prioritizes and routes your inquiry to ensure rapid response from the right expert.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Premium Footer -->
-    <footer>
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
+            <div class="footer-grid">
+                <div class="footer-brand">
                     <div class="footer-logo">
-                        <div class="logo-icon">G</div>
+                        <div class="logo-mark" style="width: 32px; height: 32px; font-size: 1rem;">G</div>
                         <div class="logo-text">Globex<span>IP</span></div>
                     </div>
-                    <p>Global patent filing and IP protection services with expertise in Indian and international patent systems.</p>
-                    
-                    <div class="certifications">
-                        <div class="cert-badge">ISO</div>
-                        <div class="cert-badge">WIPO</div>
-                        <div class="cert-badge">INTA</div>
-                        <div class="cert-badge">AIPPI</div>
+                    <p class="footer-description body-base">
+                        The world's most advanced intellectual property protection platform, 
+                        combining artificial intelligence with global legal expertise.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
                     </div>
-                </div>
-                
-                <div>
-                    <h4 class="footer-heading">Company</h4>
-                    <ul class="footer-links">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#team">Our Team</a></li>
-                        <li><a href="#careers">Careers</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#blog">Blog</a></li>
-                    </ul>
                 </div>
                 
                 <div>
                     <h4 class="footer-heading">Services</h4>
                     <ul class="footer-links">
-                        <li><a href="#services">Patent Filing</a></li>
-                        <li><a href="#services">Patent Drafting</a></li>
-                        <li><a href="#services">Patent Search</a></li>
-                        <li><a href="#services">PCT Filing</a></li>
-                        <li><a href="#services">IP Strategy</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Patent Filing</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Patent Search</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> IP Strategy</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Portfolio Management</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Careers</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Press</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
                 </div>
                 
                 <div>
                     <h4 class="footer-heading">Legal</h4>
                     <ul class="footer-links">
-                        <li><a href="#privacy">Privacy Policy</a></li>
-                        <li><a href="#terms">Terms of Service</a></li>
-                        <li><a href="#confidentiality">Confidentiality</a></li>
-                        <li><a href="#compliance">Compliance</a></li>
-                        <li><a href="#cookies">Cookie Policy</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Security</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-chevron-right"></i> Compliance</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2023 GlobexIP. All rights reserved. | Global Patent Filing & IP Protection Services</p>
+                <p class="body-sm">© 2024 GlobexIP. All rights reserved.</p>
+                <p class="body-sm">Patents pending for AI-driven IP protection technology.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainNav = document.getElementById('mainNav');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Mega Menu
-        const servicesLink = document.getElementById('servicesLink');
-        const megaMenu = document.getElementById('megaMenu');
-        
-        servicesLink.addEventListener('mouseenter', () => {
-            megaMenu.classList.add('active');
-        });
-        
-        megaMenu.addEventListener('mouseleave', () => {
-            megaMenu.classList.remove('active');
-        });
-        
-        // Animate elements on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.service-card, .hero-icon, .case-card, .testimonial-card, .resource-card, .calc-result');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                    
-                    if (element.classList.contains('case-card')) {
-                        element.style.transform = 'translateX(0)';
-                    }
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-        
-        // Cost Calculator
-        const costCalculator = document.getElementById('costCalculator');
-        const costResult = document.getElementById('costResult');
-        
-        const updateCost = () => {
-            const jurisdiction = document.getElementById('jurisdiction').value;
-            const type = document.getElementById('type').value;
-            const complexity = document.getElementById('complexity').value;
-            const search = document.getElementById('search').value;
-            
-            // Base costs (simplified for demo)
-            let baseCost = 0;
-            let min = 0;
-            let max = 0;
-            
-            if (jurisdiction === 'india') {
-                baseCost = 50000;
-            } else if (jurisdiction === 'us') {
-                baseCost = 150000;
-            } else if (jurisdiction === 'eu') {
-                baseCost = 200000;
-            } else if (jurisdiction === 'china') {
-                baseCost = 80000;
-            } else {
-                baseCost = 120000;
+        // Modern JavaScript with ES6+ features
+        class App {
+            constructor() {
+                this.init();
             }
-            
-            // Adjust for complexity
-            if (complexity === 'medium') baseCost *= 1.5;
-            if (complexity === 'complex') baseCost *= 2;
-            
-            // Add search cost
-            if (search === 'yes') baseCost += 25000;
-            
-            min = Math.floor(baseCost * 0.85);
-            max = Math.floor(baseCost * 1.2);
-            
-            // Format as Indian rupees
-            const formatter = new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
-            
-            document.querySelector('.estimated-cost').textContent = `${formatter.format(min)} - ${formatter.format(max)}`;
-            
-            // Animate result
-            costResult.style.opacity = '0';
-            costResult.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                costResult.style.opacity = '1';
-                costResult.style.transform = 'translateY(0)';
-            }, 300);
-        };
-        
-        costCalculator.addEventListener('change', updateCost);
-        
-        // Initialize calculator
-        updateCost();
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
+
+            init() {
+                this.setupNavigation();
+                this.setupAnimations();
+                this.setupCalculator();
+                this.setupForm();
+                this.setupGlobe();
+                this.setupSmoothScroll();
+                this.setupIntersectionObserver();
+            }
+
+            setupNavigation() {
+                const nav = document.getElementById('nav');
+                const mobileToggle = document.getElementById('mobileMenuToggle');
+                const navMenu = document.getElementById('navMenu');
+
+                // Scroll effect
+                window.addEventListener('scroll', () => {
+                    nav.classList.toggle('scrolled', window.scrollY > 50);
+                });
+
+                // Mobile menu toggle
+                mobileToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    mobileToggle.innerHTML = navMenu.classList.contains('active')
+                        ? '<i class="fas fa-times"></i>'
+                        : '<i class="fas fa-bars"></i>';
+                });
+
+                // Close mobile menu when clicking links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navMenu.classList.remove('active');
+                        mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    });
+                });
+            }
+
+            setupAnimations() {
+                // Initialize GSAP
+                gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+                // Animate hero elements
+                gsap.from('.hero-badge', {
+                    duration: 1,
+                    y: 20,
+                    opacity: 0,
+                    ease: 'power3.out'
+                });
+
+                gsap.from('.display-1', {
+                    duration: 1.2,
+                    y: 40,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: 'power3.out',
+                    delay: 0.3
+                });
+
+                gsap.from('.hero-description', {
+                    duration: 1,
+                    y: 30,
+                    opacity: 0,
+                    ease: 'power3.out',
+                    delay: 0.8
+                });
+
+                gsap.from('.hero-actions', {
+                    duration: 1,
+                    y: 30,
+                    opacity: 0,
+                    ease: 'power3.out',
+                    delay: 1
+                });
+
+                // Animate floating elements
+                gsap.to('.floating-element', {
+                    y: -20,
+                    duration: 2,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut',
+                    stagger: 0.2
+                });
+
+                // Animate stats on scroll
+                gsap.utils.toArray('.stat-value').forEach(stat => {
+                    ScrollTrigger.create({
+                        trigger: stat,
+                        start: 'top 80%',
+                        onEnter: () => this.animateCounter(stat)
+                    });
+                });
+            }
+
+            animateCounter(element) {
+                const target = parseInt(element.textContent.replace(/[^0-9]/g, ''));
+                const suffix = element.textContent.replace(/[0-9]/g, '');
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current) + suffix;
+                }, 16);
+            }
+
+            setupCalculator() {
+                const inputs = document.querySelectorAll('#jurisdiction, #technology, #serviceLevel, #additionalServices');
+                const result = document.querySelector('.result-amount');
+
+                const prices = {
+                    jurisdiction: {
+                        single: 0.3,
+                        regional: 0.7,
+                        global: 1.8,
+                        custom: 1.2
+                    },
+                    technology: {
+                        software: 1.2,
+                        biotech: 1.8,
+                        manufacturing: 1.0,
+                        electronics: 1.1,
+                        chemical: 1.3
+                    },
+                    serviceLevel: {
+                        basic: 0.8,
+                        standard: 1.0,
+                        premium: 1.5,
+                        enterprise: 2.2
+                    }
+                };
+
+                const basePrice = 25000;
+
+                const updateCalculator = () => {
+                    const jurisdiction = document.getElementById('jurisdiction').value;
+                    const technology = document.getElementById('technology').value;
+                    const serviceLevel = document.getElementById('serviceLevel').value;
+                    const additionalServices = document.getElementById('additionalServices').selectedOptions.length;
+
+                    let total = basePrice *
+                        prices.jurisdiction[jurisdiction] *
+                        prices.technology[technology] *
+                        prices.serviceLevel[serviceLevel];
+
+                    total *= (1 + additionalServices * 0.1);
+
+                    const formatter = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    });
+
+                    gsap.to(result, {
+                        duration: 0.3,
+                        scale: 0.95,
+                        opacity: 0.7,
+                        onComplete: () => {
+                            result.textContent = formatter.format(total);
+                            gsap.to(result, {
+                                duration: 0.3,
+                                scale: 1,
+                                opacity: 1
+                            });
+                        }
+                    });
+                };
+
+                inputs.forEach(input => {
+                    input.addEventListener('change', updateCalculator);
+                });
+
+                // Initialize
+                updateCalculator();
+            }
+
+            setupForm() {
+                const form = document.getElementById('contactForm');
                 
-                if (href !== '#') {
+                form.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     
-                    const targetElement = document.querySelector(href);
-                    if (targetElement) {
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    // Show loading state
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    submitBtn.disabled = true;
+                    
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Show success state
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Success!';
+                    submitBtn.style.background = 'var(--color-success)';
+                    
+                    // Reset form
+                    setTimeout(() => {
+                        form.reset();
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                        
+                        // Show toast notification
+                        this.showToast('Consultation scheduled successfully! Our team will contact you within 2 hours.');
+                    }, 2000);
+                });
+            }
+
+            showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.textContent = message;
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: var(--color-success);
+                    color: white;
+                    padding: var(--space-4) var(--space-6);
+                    border-radius: var(--radius-lg);
+                    box-shadow: var(--shadow-xl);
+                    z-index: var(--z-toast);
+                    animation: slideIn 0.3s ease;
+                `;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+                
+                // Add CSS for animations
+                if (!document.getElementById('toast-styles')) {
+                    const style = document.createElement('style');
+                    style.id = 'toast-styles';
+                    style.textContent = `
+                        @keyframes slideIn {
+                            from { transform: translateX(100%); opacity: 0; }
+                            to { transform: translateX(0); opacity: 1; }
+                        }
+                        @keyframes slideOut {
+                            from { transform: translateX(0); opacity: 1; }
+                            to { transform: translateX(100%); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            setupGlobe() {
+                const canvas = document.getElementById('globeCanvas');
+                if (!canvas) return;
+
+                const width = canvas.offsetWidth;
+                const height = canvas.offsetHeight;
+
+                // Scene setup
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(width, height);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                // Globe
+                const geometry = new THREE.SphereGeometry(2, 64, 64);
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0x4285F4,
+                    emissive: 0x0A5EBD,
+                    shininess: 100,
+                    transparent: true,
+                    opacity: 0.9
+                });
+                const globe = new THREE.Mesh(geometry, material);
+                scene.add(globe);
+
+                // Atmosphere
+                const atmosphereGeometry = new THREE.SphereGeometry(2.1, 64, 64);
+                const atmosphereMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x4285F4,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+                scene.add(atmosphere);
+
+                // Lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(5, 3, 5);
+                scene.add(directionalLight);
+
+                // Points for cities
+                const points = [];
+                const pointsGeometry = new THREE.BufferGeometry();
+                const pointsMaterial = new THREE.PointsMaterial({
+                    color: 0xffffff,
+                    size: 0.05,
+                    transparent: true
+                });
+
+                for (let i = 0; i < 50; i++) {
+                    const phi = Math.acos(-1 + (2 * i) / 50);
+                    const theta = Math.sqrt(50 * Math.PI) * phi;
+                    
+                    const x = 2 * Math.sin(phi) * Math.cos(theta);
+                    const y = 2 * Math.cos(phi);
+                    const z = 2 * Math.sin(phi) * Math.sin(theta);
+                    
+                    points.push(x, y, z);
+                }
+
+                pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+                const pointsMesh = new THREE.Points(pointsGeometry, pointsMaterial);
+                scene.add(pointsMesh);
+
+                camera.position.z = 5;
+
+                // Controls
+                const controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.rotateSpeed = 0.5;
+
+                // Animation
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    globe.rotation.y += 0.002;
+                    pointsMesh.rotation.y += 0.001;
+                    controls.update();
+                    renderer.render(scene, camera);
+                };
+
+                animate();
+
+                // Handle resize
+                window.addEventListener('resize', () => {
+                    camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+                });
+            }
+
+            setupSmoothScroll() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        const href = anchor.getAttribute('href');
+                        if (href === '#') return;
+
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (!target) return;
+
                         window.scrollTo({
-                            top: targetElement.offsetTop - 100,
+                            top: target.offsetTop - 80,
                             behavior: 'smooth'
                         });
-                    }
-                }
-            });
+                    });
+                });
+            }
+
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-fadeInUp');
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                });
+
+                // Observe service cards, case studies, and testimonials
+                document.querySelectorAll('.service-card, .case-card, .testimonial-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
+        }
+
+        // Initialize app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new App();
         });
-        
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(10, 25, 47, 0.95)';
-                header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
-            } else {
-                header.style.background = 'rgba(10, 25, 47, 0.85)';
-                header.style.boxShadow = 'none';
+
+        // Add focus styles for accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-user');
             }
         });
-        
-        // Hero icons animation
-        const heroIcons = document.querySelectorAll('.hero-icon');
-        heroIcons.forEach((icon, index) => {
-            setTimeout(() => {
-                icon.style.opacity = '1';
-                icon.style.transform = 'translateY(0)';
-            }, index * 200);
-        });
-        
-        // Form submission
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! In a full implementation, this would submit the form to our servers. We will contact you shortly.');
-            this.reset();
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-user');
         });
     </script>
 </body>
