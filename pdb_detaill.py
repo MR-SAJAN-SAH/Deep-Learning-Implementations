@@ -26,4 +26,4 @@ def inspect_pdb(path):
 
 
 # Example usage:
-inspect_pdb("example.pdb")
+inspect_pdb("4yki_GLY_ligand.pdb")
